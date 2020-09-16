@@ -1,0 +1,40 @@
+version: '3.3'
+services:
+  dummy-service:
+    ports:
+      - 80:8080
+      - 9666:9229
+    build:
+      context: ../
+    command: npm run start:docker:debug
+    depends_on:
+      - db-service
+    env_file:
+      - .env.local
+    volumes:
+      - ./src:/app/src:z
+  db-service:
+    image: postgres:12-alpine
+    #   Setup the username, password, and database name. You can changes these values.
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=db-example
+      - POSTGRES_HOST=127.0.0.1
+    ports:
+      - 5432:5432
+    volumes:
+      - dbdata:/var/lib/postgresql/data
+  pg-admin:
+    image: dpage/pgadmin4
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=a
+      - PGADMIN_DEFAULT_PASSWORD=a
+      - GUNICORN_ACCESS_LOGFILE=/dev/null
+    ports:
+      - 8080:80
+    volumes:
+      - pg-admin:/var/lib/pgadmin:z
+volumes:
+  dbdata:
+  pg-admin:

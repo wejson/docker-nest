@@ -1,0 +1,92 @@
+{
+  "name": "server",
+  "version": "0.0.0",
+  "description": "",
+  "author": "",
+  "license": "MIT",
+  "scripts": {
+    "start:docker:debug": "nodemon -L --config ../nodemon-debug.json",
+    "test:ci": "jest --ci --reporters=jest-junit --detectOpenHandles --forceExit",
+    "prebuild": "rimraf dist",
+    "build": "nest build",
+    "format": "prettier --write \\\"server/src/**/*.ts\\\" \\\"test/**/*.ts\\\"",
+    "start": "nest start",
+    "start:dev": "nest start --watch",
+    "start:debug": "nest start --debug --watch",
+    "start:prod": "node dist/main",
+    "lint": "tslint -p ../tsconfig.json -c tslint.js on",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
+    "ver2json": "ts-node ./scripts/version2json.ts"
+  },
+  "dependencies": {
+    "@nestjs/common": "^6.7.2",
+    "@nestjs/config": "0.0.7",
+    "@nestjs/core": "^6.7.2",
+    "@nestjs/jwt": "^6.1.1",
+    "@nestjs/microservices": "^6.8.0",
+    "@nestjs/passport": "^6.1.1",
+    "@nestjs/platform-express": "^6.7.2",
+    "@nestjs/swagger": "^4.1.14",
+    "axios": "^0.19.2",
+    "bcrypt": "^3.0.7",
+    "class-transformer": "^0.2.3",
+    "class-validator": "^0.11.0",
+    "faker": "^4.1.0",
+    "moment": "^2.24.0",
+    "morgan": "^1.9.1",
+    "passport": "^0.4.1",
+    "reflect-metadata": "0.1.12",
+    "rimraf": "^3.0.0",
+    "rxjs": "^6.5.3",
+    "uuid": "^3.3.3",
+    "winston": "^3.2.1"
+  },
+  "devDependencies": {
+    "husky": "^3.0.9",
+    "jest": "^24.9.0",
+    "jest-junit": "^6.3.0",
+    "nodemon": "^1.19.1",
+    "supertest": "^4.0.2",
+    "ts-jest": "^24.1.0",
+    "ts-loader": "^6.1.1",
+    "ts-node": "^8.4.1",
+    "tsconfig-paths": "^3.9.0",
+    "tslint": "^5.20.0",
+    "tslint-eslint-rules": "^5.4.0",
+    "typescript": "^3.6.3"
+  },
+  "jest": {
+    "moduleDirectories": [
+      "src",
+      "node_modules"
+    ],
+    "moduleNameMapper": {
+      "^@v1/(.*)": "<rootDir>/v1/$1",
+      "^@v3/(.*)": "<rootDir>/v3/$1",
+      "^@util/(.*)": "<rootDir>/util/$1"
+    },
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "ts"
+    ],
+    "rootDir": "src",
+    "testRegex": ".spec.ts$",
+    "transform": {
+      "^.+\\.(t|j)s$": "ts-jest"
+    },
+    "coverageDirectory": "../coverage",
+    "testEnvironment": "node"
+  },
+  "jest-junit": {
+    "outputDirectory": ".",
+    "outputName": "junit-report.xml"
+  },
+  "husky": {
+    "hooks": {
+      "pre-push": "npm audit fix"
+    }
+  }
+}

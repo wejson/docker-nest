@@ -1,0 +1,7 @@
+node_modules
+.circleci
+terraform
+ci
+tmp
+Jenkinsfile
+README.md
